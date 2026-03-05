@@ -1,9 +1,16 @@
 # Pokies
 
-# Create list of random symbols
+# Get randomiser
+import random
 
-# Create 3 rows and 3 columns 
+# Create symbols list
+symbols = ["7", "$", "*", "#"]
 
-# Randomise them
+# Empty Grid
+grid = []
 
-# Match up? (If 0,0 == 0,1 maybe?)
+#Generate grid
+for row in range(3):
+    random.shuffle(symbols)
+    print(symbols)
+    
