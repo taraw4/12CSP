@@ -2,10 +2,10 @@
 
 # Introduction
 print("Welcome to the slots machine!")
-score = 0
 
 # Get randomiser
 import random
+score = 0
 
 # Create symbols list
 symbols = ["7", "$", "*", "#"]
@@ -50,10 +50,5 @@ elif score == 1:
 
 else:
     print("KACHING! YOU MADE {} MATCH!".format(score))
-    
-
-
-
-
     
 
