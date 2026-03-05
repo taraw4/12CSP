@@ -6,11 +6,25 @@ import random
 # Create symbols list
 symbols = ["7", "$", "*", "#"]
 
-# Empty Grid
+# Generate Grid
 grid = []
 
-#Generate grid
+# Row runs 3 times
 for row in range(3):
-    random.shuffle(symbols)
-    print(symbols)
+    row_list = []
+
+# Every column choose random symbol and add to row
+    for column in range(3):
+        item = random.choice(symbols)
+        row_list.append(item)
+        
+# Add new row to grid
+    grid.append(row_list)
+
+# Every grid print on new line 
+for row in grid:
+    print(row)
+
+
     
+
