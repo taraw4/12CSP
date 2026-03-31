@@ -13,42 +13,65 @@ symbols = ["7", "$", "*", "#"]
 # Generate Grid
 grid = []
 
+# Run program until user stops
+keep_going = True
+while keep_going == True:
+
+    # Reset each loop
+    grid = []
+    score = 0
+    
 # Row runs 3 times
-for row in range(3):
-    row_list = []
+    for row in range(3):
+        row_list = []
 
 # Every column choose random symbol and add to row
-    for column in range(3):
-        item = random.choice(symbols)
-        row_list.append(item)
+        for column in range(3):
+            item = random.choice(symbols)
+            row_list.append(item)
         
 # Add new row to grid
-    grid.append(row_list)
+        grid.append(row_list)
 
 # Every grid print on new line 
-for row in grid:
-    print(row)
+    for row in grid:
+        print(row)
 
 # Match up first row
-if grid[0][0] == grid[0][1] and grid[0][1] == grid[0][2]:
-    score += 1
+    if grid[0][0] == grid[0][1] and grid[0][1] == grid[0][2]:
+        score += 1
 
 # Match up second row
-if grid[1][0] == grid[1][1] and grid[1][1] == grid[1][2]:
-    score += 1
+    if grid[1][0] == grid[1][1] and grid[1][1] == grid[1][2]:
+        score += 1
 
 # Match up third row
-if grid[2][0] == grid[2][1] and grid[2][1] == grid[2][2]:
-    score += 1
+    if grid[2][0] == grid[2][1] and grid[2][1] == grid[2][2]:
+        score += 1
 
 #Final scores
-if score == 0:
-    print("womp womp.. Sorry you didn't win anything.")
+    if score == 0:
+        print("womp womp.. Sorry you didn't win anything.")
 
-elif score == 1:
-    print("KACHING! YOU MADE 1 MATCH!")
+    elif score == 1:
+        print("KACHING! YOU MADE 1 MATCH!")
 
-else:
-    print("KACHING! YOU MADE {} MATCH!".format(score))
+    else:
+        print("KACHING! YOU MADE {} MATCH!".format(score))
+
+    # Ask user if they want to continue
+    valid_input =  False
+    while valid_input == False:
+        answer = input("Would you like to play again?").lower()
+
+        if answer == "yes":
+            keep_going = True
+            valid_input = True
+
+        elif answer == "no":
+            keep_going = False
+            valid_input = True
+
+        else:
+            print("Please enter a valid statement")
     
-
