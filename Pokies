@@ -33,9 +33,15 @@ while keep_going == True:
 # Add new row to grid
         grid.append(row_list)
 
-# Every grid print on new line 
+# Body
+
+# Print a top border
+    print("--- SLOTS ---")
+
+# Every grid print on new line
     for row in grid:
-        print(row)
+        display_row = " ".join(row)
+        print(display_row)
 
 # Match up first row
     if grid[0][0] == grid[0][1] and grid[0][1] == grid[0][2]:
@@ -57,7 +63,7 @@ while keep_going == True:
         print("KACHING! YOU MADE 1 MATCH!")
 
     else:
-        print("KACHING! YOU MADE {} MATCH!".format(score))
+        print("KACHING! YOU MADE {} MATCHES!".format(score))
 
     # Ask user if they want to continue
     valid_input =  False
