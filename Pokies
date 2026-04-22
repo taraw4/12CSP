@@ -8,7 +8,7 @@ import random
 score = 0
 
 # Create symbols list
-symbols = ["7", "$", "*", "#"]
+symbols = ["𝟕", "💲", "🍒", "♤"]
 
 # Generate Grid
 grid = []
@@ -34,14 +34,13 @@ while keep_going == True:
         grid.append(row_list)
 
 # Body
-
 # Print a top border
     print("--- SLOTS ---")
 
 # Every grid print on new line
     for row in grid:
-        display_row = " ".join(row)
-        print(display_row)
+        print(" | ".join(row))
+    print("-------------")
 
 # Match up first row
     if grid[0][0] == grid[0][1] and grid[0][1] == grid[0][2]:
