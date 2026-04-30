@@ -1,10 +1,16 @@
 # Pokies
 
+# Get randomiser
+import random
+score = 0
+
 # Function to check for matches
-def check_line(row):
+def check_line(row_to_check):
+    """Check if any any matches"""
+    
 
     # Check for match
-    if row[0] == row[1] and row[1] == row[2]:
+    if row_to_check[0] == row_to_check[1] and row_to_check[1] == row_to_check[2]:
         return True
 
     return False
@@ -12,12 +18,8 @@ def check_line(row):
 # Introduction
 print("Welcome to the slots machine!")
 
-# Get randomiser
-import random
-score = 0
-
 # Create symbols list
-symbols = ["𝟕", "💲", "🍒", "♤"]
+symbols = ["7", "$", "*", "#"]
 
 # Generate Grid
 grid = []
@@ -80,3 +82,4 @@ while keep_going == True:
         else:
             print("Please enter a valid statement")
     
+
