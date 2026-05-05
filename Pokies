@@ -10,7 +10,7 @@ def check_line(row_to_check):
     
 
     # Check for match
-    if row_to_check[0] == row_to_check[1] and row_to_check[1] == row_to_check[2]:
+    if row_to_check[0] == row_to_check[1] == row_to_check[2]:
         return True
 
     return False
@@ -21,8 +21,8 @@ print("Welcome to the slots machine!")
 # Create symbols list
 symbols = ["7", "$", "*", "#"]
 
-# Generate Grid
-grid = []
+# Total matches overall
+total_matches = 0
 
 # Run program until user stops
 keep_going = True
@@ -30,46 +30,53 @@ while keep_going == True:
 
     # Reset each loop
     grid = []
-    score = 0
-    
-# Row runs 3 times
+    matches_this_spin = 0
+
+    # Row runs 3 times
     for row in range(3):
         row_list = []
 
-# Every column choose random symbol and add to row
+        # Every column choose random symbol and add to row
         for column in range(3):
             item = random.choice(symbols)
             row_list.append(item)
         
-# Add new row to grid
+        # Add new row to grid
         grid.append(row_list)
 
 # Body
-# Print a top border
-    print("--- SLOTS ---")
 
-# Every grid print on new line
+    # Print a top border
+    print("\n--- SLOTS ---")
+
+    # Every grid print on new line
     for row in grid:
         print(" | ".join(row))
+
+        # Check each row as it's printed
+        if check_line(row):
+            matches_this_spin += 1
+
+    # Print bottom border       
     print("-------------")
+    
+    # Update total score
+    total_matches += matches_this_spin
 
-    if check_line(row) == True:
-        score +=1
-
-#Final scores
-    if score == 0:
+    # Final scores for this round
+    if matches_this_spin == 0:
         print("womp womp.. Sorry you didn't win anything.")
 
-    elif score == 1:
+    elif matches_this_spin == 1:
         print("KACHING! YOU MADE 1 MATCH!")
 
     else:
-        print("KACHING! YOU MADE {} MATCHES!".format(score))
+        print("KACHING! YOU MADE {} MATCHES!".format(matches_this_spin))
 
     # Ask user if they want to continue
     valid_input =  False
-    while valid_input == False:
-        answer = input("Would you like to play again?").lower()
+    while not valid_input:
+        answer = input("Would you like to play again? (yes/no): ").lower().strip
 
         if answer == "yes":
             keep_going = True
@@ -82,4 +89,3 @@ while keep_going == True:
         else:
             print("Please enter a valid statement")
     
-
