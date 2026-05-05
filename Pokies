@@ -76,7 +76,7 @@ while keep_going == True:
     # Ask user if they want to continue
     valid_input =  False
     while not valid_input:
-        answer = input("Would you like to play again? (yes/no): ").lower().strip
+        answer = input("Would you like to play again? (yes/no): ").lower().strip()
 
         if answer == "yes":
             keep_going = True
