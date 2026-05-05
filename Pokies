@@ -1,91 +1,76 @@
 # Pokies
 
-# Get randomiser
+# Import randomiser
 import random
 score = 0
 
 # Function to check for matches
 def check_line(row_to_check):
     """Check if any any matches"""
-    
+    return row_to_check[0] == row_to_check[1] == row_to_check[2]
 
-    # Check for match
-    if row_to_check[0] == row_to_check[1] == row_to_check[2]:
-        return True
-
-    return False
-
-# Introduction
-print("Welcome to the slots machine!")
-
-# Create symbols list
-symbols = ["7", "$", "*", "#"]
-
-# Total matches overall
-total_matches = 0
-
-# Run program until user stops
-keep_going = True
-while keep_going == True:
-
-    # Reset each loop
+# Function to create 3x3 grid
+def generate_grid(symbols):
+    """Generates and returs 3x3 list of lists"""
     grid = []
-    matches_this_spin = 0
-
-    # Row runs 3 times
-    for row in range(3):
-        row_list = []
-
-        # Every column choose random symbol and add to row
-        for column in range(3):
-            item = random.choice(symbols)
-            row_list.append(item)
-        
-        # Add new row to grid
+    for _ in range(3):
+        row_list = [random.choice(symbols) for _ in range(3)]
         grid.append(row_list)
+    return grid
 
-# Body
+# Function to print grid and calculate matches
+def play_round(symbols):
+    """Plays one round, prints grid and returns matches"""
+    grid = generate_grid(symbols)
+    matches = 0
 
-    # Print a top border
     print("\n--- SLOTS ---")
-
-    # Every grid print on new line
     for row in grid:
         print(" | ".join(row))
-
-        # Check each row as it's printed
         if check_line(row):
-            matches_this_spin += 1
-
-    # Print bottom border       
+            matches += 1
     print("-------------")
-    
-    # Update total score
-    total_matches += matches_this_spin
 
-    # Final scores for this round
-    if matches_this_spin == 0:
-        print("womp womp.. Sorry you didn't win anything.")
+    return matches
 
-    elif matches_this_spin == 1:
-        print("KACHING! YOU MADE 1 MATCH!")
-
-    else:
-        print("KACHING! YOU MADE {} MATCHES!".format(matches_this_spin))
-
-    # Ask user if they want to continue
-    valid_input =  False
-    while not valid_input:
+# Function to handle user's choice to play again
+def ask_to_play():
+    """Handles user input and returns a boolean"""
+    while True:
         answer = input("Would you like to play again? (yes/no): ").lower().strip()
-
         if answer == "yes":
-            keep_going = True
-            valid_input = True
-
+            return True
         elif answer == "no":
-            keep_going = False
-            valid_input = True
+            return False
+        print("Please enter a valid statement.")
 
+# Function to run program
+def main():
+    """The entry point to begin"""
+    print("Welcome to the slots machine!")
+    symbols = ["7", "$", "*", "#"]
+    total_matches = 0
+    keep_going = True
+
+    while keep_going:
+        matches_this_spin = play_round(symbols)
+        total_matches += matches_this_spin
+
+        # Report round results
+        if matches_this_spin == 0:
+
+            print("womp womp... Sorry you didn't win anything.")
+        elif matches_this_spin == 1:
+
+            print("KACHING! You made 1 match!")
+            
         else:
-            print("Please enter a valid statement")
-    
+            print("KACHING! You made {} matches!".format(matches_this_spin))
+
+        keep_going = ask_to_play()
+
+    print("\nGame Over! Total lifetime matches: {}".format(total_matches))
+    print("Thanks for playing!")
+
+if __name__ == "__main__":
+    main()
