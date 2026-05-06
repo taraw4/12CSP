@@ -7,14 +7,22 @@ score = 0
 # Function to check for matches
 def check_line(row_to_check):
     """Check if any any matches"""
+
+    #Check for matches across rows
     return row_to_check[0] == row_to_check[1] == row_to_check[2]
 
 # Function to create 3x3 grid
 def generate_grid(symbols):
     """Generates and returs 3x3 list of lists"""
     grid = []
+
+    # Row runs 3 times
     for _ in range(3):
+
+        # Each column choose random symbol and add to row
         row_list = [random.choice(symbols) for _ in range(3)]
+
+        # Add new row to grid
         grid.append(row_list)
     return grid
 
@@ -23,12 +31,19 @@ def play_round(symbols):
     """Plays one round, prints grid and returns matches"""
     grid = generate_grid(symbols)
     matches = 0
-
+    
+    # Print top border
     print("\n--- SLOTS ---")
+
+    # Print every grid on a new line
     for row in grid:
         print(" | ".join(row))
+
+        # Check each row as it's printed
         if check_line(row):
             matches += 1
+
+    # Print bottom border
     print("-------------")
 
     return matches
@@ -36,24 +51,42 @@ def play_round(symbols):
 # Function to handle user's choice to play again
 def ask_to_play():
     """Handles user input and returns a boolean"""
+
+    # Ask user if they want to continue
     while True:
         answer = input("Would you like to play again? (yes/no): ").lower().strip()
+
         if answer == "yes":
             return True
+
         elif answer == "no":
             return False
+
+        # If unaccepted value entered
         print("Please enter a valid statement.")
 
 # Function to run program
 def main():
     """The entry point to begin"""
+
+    # Introduction
     print("Welcome to the slots machine!")
+
+    # Create symbols list
     symbols = ["7", "$", "*", "#"]
+
+    # Total matches overall
     total_matches = 0
+
+    # Run program until user stops
     keep_going = True
 
     while keep_going:
+
+        # Update matches this spin
         matches_this_spin = play_round(symbols)
+
+        # Update total matches overall
         total_matches += matches_this_spin
 
         # Report round results
@@ -67,10 +100,14 @@ def main():
         else:
             print("KACHING! You made {} matches!".format(matches_this_spin))
 
+        # Checks if program continues
         keep_going = ask_to_play()
 
+    # Tell user total lifetime matches
     print("\nGame Over! Total lifetime matches: {}".format(total_matches))
     print("Thanks for playing!")
 
+# Calls the main function to start the game
 if __name__ == "__main__":
     main()
+            
