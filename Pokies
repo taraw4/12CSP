@@ -17,7 +17,7 @@ def generate_grid(symbols):
     grid = []
 
     # Row runs 3 times
-    for _ in range(3):
+    for _ in range(3): #CHANGE THIS !!!
 
         # Each column choose random symbol and add to row
         row_list = [random.choice(symbols) for _ in range(3)]
@@ -67,22 +67,32 @@ def ask_to_play():
 
 # Function to run program
 def main():
-    """The entry point to begin"""
+    """The start point of the program"""
 
     # Introduction
     print("Welcome to the slots machine!")
 
+    # Create starting budget
+    starting_funds = 10.00
+
+    # Ask if player would like to add more
+    extra_funds = input("Your starting balance is $10. Would you like to add more? (Please type amount or 0)")
+
+    # If adding more funds
+    total_start = starting_funds + float(extra_funds)
+
+    # Get player information
+    user_name = input("Enter username: ")
+    user_location = input("Enter region (e.g Wellington): ")
+
     # Create Player Profile Dictionary
     player_profile = {
-        "username": "",
-        "location": "",
+        "username": user_name,
+        "location": user_location,
+        "balance": total_start,
         "high_score": 0,
         "lifetime_losses": 0.0
         }
-
-    # Ask for player information
-    player_profile["username"] = input("Enter username: ")
-    player_profile["location"] = input("Enter region (e.g Wellington): ")
 
     # Create symbols list
     symbols = ["7", "$", "*", "#"]
@@ -96,10 +106,14 @@ def main():
     while keep_going:
 
         # Every spin costs 1.50 credits to track lifetime_losses
+        spin_cost = 1.50
+        player_profile["balance" -= spin_cost
         player_profile["lifetime_losses"] += 1.50
 
         # Update matches this spin
         matches_this_spin = play_round(symbols)
+
+        # Calculate money earned for this spec
 
         # Update total matches overall
         total_matches += matches_this_spin
@@ -112,6 +126,7 @@ def main():
         if matches_this_spin == 0:
 
             print("womp womp... Sorry you didn't win anything.")
+
         elif matches_this_spin == 1:
 
             print("KACHING! You made 1 match!")
@@ -124,15 +139,20 @@ def main():
 
     # Final Report
     print("\n--- PLAYER SUMMARY ---")
-    print("Player: {} ".format["username"])
-    print("Location: {}".format["location"])
-    print("High Score: {}".format["high_score"])
-    print("Total Amount lost: ${}".format["lifetime_losses"])
+    print("Player: {}".format(player_profile["username"]))
+    print("Location: {}".format(player_profile["location"]))
+    print("High Score: {}".format(player_profile["high_score"]))
+    print("Total Amount lost: ${:.2f}".format(player_profile["lifetime_losses"]))
     print("------------------------")
     print("Thanks for playing!")
 
 # Calls the main function to start the game
 if __name__ == "__main__":
     main()
+
+# TO DO
+# Fix for _ in range, add money + highscore, finish requirments,
+# Run through convention checker, ask what highscore means
             
+
 
