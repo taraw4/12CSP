@@ -13,7 +13,7 @@ def check_line(row_to_check):
 
 # Function to create 3x3 grid
 def generate_grid(symbols):
-    """Generates and returs 3x3 list of lists"""
+    """Generates and returns 3x3 list of lists"""
     grid = []
 
     # Row runs 3 times
@@ -65,16 +65,24 @@ def ask_to_play():
         # If unaccepted value entered
         print("Please enter a valid statement.")
 
-# Function to check if player is a high spender
-def check_marketing_status(profile):
-    
-
 # Function to run program
 def main():
     """The entry point to begin"""
 
     # Introduction
     print("Welcome to the slots machine!")
+
+    # Create Player Profile Dictionary
+    player_profile = {
+        "username": "",
+        "location": "",
+        "high_score": 0,
+        "lifetime_losses": 0.0
+        }
+
+    # Ask for player information
+    player_profile["username"] = input("Enter username: ")
+    player_profile["location"] = input("Enter region (e.g Wellington): ")
 
     # Create symbols list
     symbols = ["7", "$", "*", "#"]
@@ -87,11 +95,18 @@ def main():
 
     while keep_going:
 
+        # Every spin costs 1.50 credits to track lifetime_losses
+        player_profile["lifetime_losses"] += 1.50
+
         # Update matches this spin
         matches_this_spin = play_round(symbols)
 
         # Update total matches overall
         total_matches += matches_this_spin
+
+        # Update High Score if current run is better
+        if total_matches > player_profile["high_score"]:
+            player_profile["high_score"] = total_matches
 
         # Report round results
         if matches_this_spin == 0:
@@ -107,18 +122,17 @@ def main():
         # Checks if program continues
         keep_going = ask_to_play()
 
-    # Tell user total lifetime matches
-    print("\nGame Over! Total lifetime matches: {}".format(total_matches))
+    # Final Report
+    print("\n--- PLAYER SUMMARY ---")
+    print("Player: {} ".format["username"])
+    print("Location: {}".format["location"])
+    print("High Score: {}".format["high_score"])
+    print("Total Amount lost: ${}".format["lifetime_losses"])
+    print("------------------------")
     print("Thanks for playing!")
 
 # Calls the main function to start the game
 if __name__ == "__main__":
-    main(
-        # Create list of data profile
-        
-        
-        
-
-        )
-
+    main()
+            
 
