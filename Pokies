@@ -2,7 +2,6 @@
 
 # Import randomiser
 import random
-score = 0
 
 # Function to check for matches
 def check_line(row_to_check):
@@ -17,7 +16,7 @@ def generate_grid(symbols):
     grid = []
 
     # Row runs 3 times
-    for _ in range(3): #CHANGE THIS !!!
+    for _ in range(3): # HAD AI HELP WITH THIS!!!
 
         # Each column choose random symbol and add to row
         row_list = [random.choice(symbols) for _ in range(3)]
@@ -65,6 +64,25 @@ def ask_to_play():
         # If unaccepted value entered
         print("Please enter a valid statement.")
 
+# Function to check for whales
+def check_marketing_status(profile):
+    """Checks losses and updates marketing status"""
+    whale_threshold = 500
+
+    # Check lifetime_losses in dictionary
+    if profile["lifetime_losses"] >= whale_threshold:
+
+        #Print VIP message
+        print("*SPECIAL VIP OFFER: Double your next deposit! Buy more credits now!*")
+
+        # Updates new dictionary key
+        profile["target_ads"] = True
+
+    # Standard message
+    else:
+        print("Keep playing to climb the leaderboard!")
+         
+
 # Function to run program
 def main():
     """The start point of the program"""
@@ -72,87 +90,109 @@ def main():
     # Introduction
     print("Welcome to the slots machine!")
 
-    # Create starting budget
-    starting_funds = 10.00
-
-    # Ask if player would like to add more
-    extra_funds = input("Your starting balance is $10. Would you like to add more? (Please type amount or 0)")
-
-    # If adding more funds
-    total_start = starting_funds + float(extra_funds)
+    # Every spin costs 1.50 credits to track lifetime_losses
+    spin_cost = 10.00
 
     # Get player information
     user_name = input("Enter username: ")
     user_location = input("Enter region (e.g Wellington): ")
 
+    # Create starting budget
+    balance = 20.00
+    print("You have a starting gift of ${:.2f}".format(balance))
+
+    # Ask if player would like to add more (Had AI help on this loop)
+    while True:
+        extra_funds = input("Would you like to add more? (Please type amount or 0)")
+
+        try:
+            added_amount = float(extra_funds)
+            
+            # Check number is not negative
+            if added_amount >= 0:
+                balance += (added_amount)
+                break
+
+            # If negative number
+            else:
+                print("Error: You cannot add a negative amount of money. Please try again.")
+
+        # If user types text or symbols
+        except ValueError:
+            print("Invalid input! Please enter a number (e.g, 50 or 0.)")
+            
+    # Balance summary
+    print("Your balance is now ${:.2f}".format(balance))
+    print("Each spin costs ${:.2f}".format(spin_cost))
+
     # Create Player Profile Dictionary
     player_profile = {
         "username": user_name,
         "location": user_location,
-        "balance": total_start,
-        "high_score": 0,
+        "balance": balance,
+        "high_score": balance,
         "lifetime_losses": 0.0
         }
 
     # Create symbols list
     symbols = ["7", "$", "*", "#"]
 
-    # Total matches overall
-    total_matches = 0
-
     # Run program until user stops
     keep_going = True
 
     while keep_going:
 
-        # Every spin costs 1.50 credits to track lifetime_losses
-        spin_cost = 1.50
-        player_profile["balance" -= spin_cost
-        player_profile["lifetime_losses"] += 1.50
+        # Check if player has enough
+        if player_profile["balance"] < spin_cost:
+            print("Insufficient funds! Your balance is only ${:.2f}".format(player_profile["balance"]))
+            break
+
+        # Remove cost
+        player_profile["balance"] -= spin_cost
+        player_profile["lifetime_losses"] += spin_cost
 
         # Update matches this spin
         matches_this_spin = play_round(symbols)
 
-        # Calculate money earned for this spec
+        # Calculate money earned for this spin
+        winnings = matches_this_spin * 20.00
 
-        # Update total matches overall
-        total_matches += matches_this_spin
+        # Update Player Profile
+        player_profile["balance"] += winnings
 
         # Update High Score if current run is better
-        if total_matches > player_profile["high_score"]:
-            player_profile["high_score"] = total_matches
+        if player_profile["balance"] > player_profile["high_score"]:
+            player_profile["high_score"] = player_profile["balance"]
 
         # Report round results
-        if matches_this_spin == 0:
+        if matches_this_spin > 0:
+            print("KACHING! You earned ${:.2f}".format(winnings))
 
-            print("womp womp... Sorry you didn't win anything.")
-
-        elif matches_this_spin == 1:
-
-            print("KACHING! You made 1 match!")
-            
         else:
-            print("KACHING! You made {} matches!".format(matches_this_spin))
-
+            print("womp womp... no matches this time.")
+            
+        
+        # Print current balance
+        print("--- CURRENT BALANCE : ${:.2f} ---".format(player_profile["balance"]))
+        
         # Checks if program continues
         keep_going = ask_to_play()
 
+    # Call new marketing function
+    check_marketing_status(player_profile)
+        
     # Final Report
     print("\n--- PLAYER SUMMARY ---")
     print("Player: {}".format(player_profile["username"]))
     print("Location: {}".format(player_profile["location"]))
-    print("High Score: {}".format(player_profile["high_score"]))
+    print("High Score: ${:.2f}".format(player_profile["high_score"]))
     print("Total Amount lost: ${:.2f}".format(player_profile["lifetime_losses"]))
+
+
     print("------------------------")
     print("Thanks for playing!")
 
 # Calls the main function to start the game
 if __name__ == "__main__":
     main()
-
-# TO DO
-# Fix for _ in range, add money + highscore, finish requirments,
-# Run through convention checker, ask what highscore means
-            
-
 
