@@ -1,0 +1,34 @@
+##
+# WGC Arcade Prize Manager
+# Tara W
+# 11/05
+
+
+# Create list of dictionary
+# Store 5 different prizes
+data_storage = [{"name": "Bouncy Ball", "ticket cost": 10, "current stock": 60},
+                {"name": "Fidget Spinner", "ticket cost": 30, "current stock": 52},
+                {"name": "Bop It", "ticket cost": 100, "current stock": 24},
+                {"name": "Action Figure", "ticket cost": 500, "current stock": 12},
+                {"name": "Nerf Gun", "ticket cost": 1000, "current stock": 5}]
+                
+# Greet user
+print("Welcome to WGC's Mega-Byte Arcade!")
+
+# Create loop that stays open until user exits
+keep_going = True
+
+while keep_going == True:
+    # Print options
+    print("1.) Display Inventory")
+    choice = input("Please select an option. (e.g '1')")
+
+    # If user selects option 1
+    if choice == "1":
+        print(data_storage)
+    
+
+
+print(data_storage[0]["name"])
+print(data_storage[4]["ticket cost"])
+
