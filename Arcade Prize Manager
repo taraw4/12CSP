@@ -3,32 +3,51 @@
 # Tara W
 # 11/05
 
-
-# Create list of dictionary
-# Store 5 different prizes
-data_storage = [{"name": "Bouncy Ball", "ticket cost": 10, "current stock": 60},
-                {"name": "Fidget Spinner", "ticket cost": 30, "current stock": 52},
-                {"name": "Bop It", "ticket cost": 100, "current stock": 24},
-                {"name": "Action Figure", "ticket cost": 500, "current stock": 12},
-                {"name": "Nerf Gun", "ticket cost": 1000, "current stock": 5}]
+def display_all_inventory(data):
+    """Print all inventory names (items) in the database"""
+    print("\n--- Arcade Inventory ---")
+    for toy in data:
+        print("Name: {} | Ticket Cost: {} | Current Stock: {} ".format(toy["name"],
+              toy["ticket cost"], toy["current stock"]))
+    
+          
+def main():
+    """
+    Main routine
+    contains  dictionary and menu
+    """
+    
+    # Create list of dictionary
+    # Store 5 different prizes
+    data_storage = [{"name": "Bouncy Ball", "ticket cost": 10, "current stock": 60},
+                    {"name": "Fidget Spinner", "ticket cost": 30, "current stock": 52},
+                    {"name": "Bop It", "ticket cost": 100, "current stock": 24},
+                    {"name": "Action Figure", "ticket cost": 500, "current stock": 12},
+                    {"name": "Nerf Gun", "ticket cost": 1000, "current stock": 5}]
                 
-# Greet user
-print("Welcome to WGC's Mega-Byte Arcade!")
+    # Greet user
+    print("Welcome to WGC's Mega-Byte Arcade!")
 
-# Create loop that stays open until user exits
-keep_going = True
+    # Create loop that stays open until user exits
+    while True:
+        # Print options
+        print("\n-- User Menu ---")
+        print("1.) Display Inventory")
+        print("0.) Exit")
+    
+        choice = input("Please select an option. (e.g '1'): ")
 
-while keep_going == True:
-    # Print options
-    print("1.) Display Inventory")
-    choice = input("Please select an option. (e.g '1')")
+        # If user selects option 1
+        if choice == "1":
+            display_all_inventory(data_storage)
 
-    # If user selects option 1
-    if choice == "1":
-        print(data_storage)
+        elif choice == "0":
+            break
+
+        else:
+            print("Please enter a valid number")
     
 
 
-print(data_storage[0]["name"])
-print(data_storage[4]["ticket cost"])
-
+if __name__ == "__main__":
+    main()
