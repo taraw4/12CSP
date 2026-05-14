@@ -38,10 +38,12 @@ def add_tickets(balance):
 
     print("\nSuccessfully updated. Your balance is now {} tickets.".format(balance))
     
-def redeem_prize(data, target_prize):
-    """Return details of a specific student"""
+# Redeem prize
+def redeem_prize(current_stock):
+    """Return details of a specific prize"""
     # .get() returns the second argument if key does not exist
-    result = data.get(target_toy, "prize not found in data base)
+    get_prize = input("Prize name: ").capitalize()
+    get_prize 
     
 def main():
     """
@@ -51,7 +53,7 @@ def main():
     
     # Create list of dictionary
     # Store 5 different prizes
-    data_storage = [{"name": "Bouncy Ball", "ticket cost": 10, "current stock": 60},
+    prizes_list = [{"name": "Bouncy Ball", "ticket cost": 10, "current stock": 60},
                     {"name": "Fidget Spinner", "ticket cost": 30, "current stock": 52},
                     {"name": "Bop It", "ticket cost": 100, "current stock": 24},
                     {"name": "Action Figure", "ticket cost": 500, "current stock": 12},
@@ -71,19 +73,29 @@ def main():
         print("\n-- User Menu ---")
         print("1.) Display Inventory")
         print("2.) Add Tickets")
+        print("3.) Find") 
         print("0.) Exit")
     
         choice = input("Please select an option. (e.g '1'): ")
 
         # If user selects option 1
         if choice == "1":
-            display_all_inventory(data_storage)
-
-        elif choice == "0":
-            break
+            display_all_inventory(prizes_list)
 
         elif choice == "2":
             add_tickets(balance)
+
+        elif choice == "3":
+            # Ask for prize
+            search = input("Prize name: ").capitalize()
+            result = find_prize(prizes_list, search)
+
+            # Look for
+            print(result)
+
+        elif choice == "0":
+            print("Program shutting down...")
+            break
 
         else:
             print("Please enter a valid number")
@@ -92,4 +104,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
