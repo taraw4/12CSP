@@ -3,14 +3,46 @@
 # Tara W
 # 11/05
 
+# Functions
+
 def display_all_inventory(data):
     """Print all inventory names (items) in the database"""
     print("\n--- Arcade Inventory ---")
     for toy in data:
+        # Display inventory nicely
         print("Name: {} | Ticket Cost: {} | Current Stock: {} ".format(toy["name"],
               toy["ticket cost"], toy["current stock"]))
     
-          
+def add_tickets(balance):
+    """Update players ticket balance"""
+
+    # Ask player how many tickets they would like to add
+    while True:
+        extra_tickets = input("Please enter amount of tickets to add. (e.g 200): ")
+
+        try:
+            added_amount = int(extra_tickets)
+
+            # Check number is not negative
+            if added_amount >= 0:
+                balance += (added_amount)
+                break
+
+            # If negative number
+            else:
+                print("Error: You cannot add a negative amount of tickets. Please try again.")
+
+        # If user types text or symbolss
+        except ValueError:
+            print("Invalid input! Please enter a number(e.g, 50 or 200.)")
+
+    print("\nSuccessfully updated. Your balance is now {} tickets.".format(balance))
+    
+def redeem_prize(data, target_prize):
+    """Return details of a specific student"""
+    # .get() returns the second argument if key does not exist
+    result = data.get(target_toy, "prize not found in data base)
+    
 def main():
     """
     Main routine
@@ -28,11 +60,17 @@ def main():
     # Greet user
     print("Welcome to WGC's Mega-Byte Arcade!")
 
+    # Give user a starting balance
+    balance = 0
+    
+    print("You have {} tickets.".format(balance))
+
     # Create loop that stays open until user exits
     while True:
         # Print options
         print("\n-- User Menu ---")
         print("1.) Display Inventory")
+        print("2.) Add Tickets")
         print("0.) Exit")
     
         choice = input("Please select an option. (e.g '1'): ")
@@ -44,6 +82,9 @@ def main():
         elif choice == "0":
             break
 
+        elif choice == "2":
+            add_tickets(balance)
+
         else:
             print("Please enter a valid number")
     
@@ -51,3 +92,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
