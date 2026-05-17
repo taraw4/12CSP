@@ -37,6 +37,7 @@ def add_tickets(balance):
         except ValueError:
             print("Invalid input! Please enter a number(e.g, 50 or 200.)")
 
+    # If all good update balance
     print("\nSuccessfully updated. Your balance is now {} tickets.".format(balance))
     return balance
 
@@ -70,6 +71,7 @@ def redeem_prize(prizes_list, balance):
             balance -= prize["ticket cost"]
             prize["current stock"] -= 1
 
+            # Give update message
             print("\nYou redeemed 1 {}!".format(prize_name))
             print("Remaining balance: {} tickets".format(balance))
             print("Current stock for {}: {}".format(prize_name, prize['current stock']))
@@ -139,3 +141,4 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
+
