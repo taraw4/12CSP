@@ -60,7 +60,7 @@ def redeem_prize(prizes_list, balance):
             
 
             # Check ticket balance
-            if balance < prize["ticket cost"]:
+            elif balance < prize["ticket cost"]:
                 print("Not enough tickets. {} costs {} tickets".format(prize_name, prize['ticket cost']))
 
                 # Stays the same
@@ -70,7 +70,7 @@ def redeem_prize(prizes_list, balance):
             balance -= prize["ticket cost"]
             prize["current stock"] -= 1
 
-            print("\nYou redeemed a {}!".format(prize_name))
+            print("\nYou redeemed 1 {}!".format(prize_name))
             print("Remaining balance: {} tickets".format(balance))
             print("Current stock for {}: {}".format(prize_name, prize['current stock']))
             return balance
