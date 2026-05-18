@@ -39,8 +39,12 @@ def add_tickets(balance):
 
     # If all good update balance
     print("\nSuccessfully updated. Your balance is now {} tickets.".format(balance))
-    return balance
 
+    # If user has 2000 or more tickets
+    if balance >= 2000:
+        print("Congratulations! You are now a VIP member!")
+
+    return balance
    
 # Redeem prize
 def redeem_prize(prizes_list, balance):
@@ -67,12 +71,19 @@ def redeem_prize(prizes_list, balance):
                 # Stays the same
                 return balance
 
+            actual_cost = prize['ticket cost']
+            
+            if balance >= 2000:
+                actual_cost = int(prize["ticket cost"] * 0.9)
+                print("\nVIP discount applied! This prize only costs {} tickets instead of {}".format(vip_discount, prize['ticket cost']))
+        
+                
             # If enough tickets + stock
-            balance -= prize["ticket cost"]
+            balance -= actual_cost
             prize["current stock"] -= 1
 
             # Give update message
-            print("\nYou redeemed 1 {}!".format(prize_name))
+            print("\nYou redeemed 1 {} for {} tickets!".format(prize_name, actual_cost))
             print("Remaining balance: {} tickets".format(balance))
             print("Current stock for {}: {}".format(prize_name, prize['current stock']))
             return balance
@@ -141,4 +152,5 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
+
 
