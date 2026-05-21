@@ -13,7 +13,7 @@ def display_all_inventory(data):
         print("Name: {} | Ticket Cost: {} | Current Stock: {} ".format(toy["name"],
               toy["ticket cost"], toy["current stock"]))
 
-    
+   
 def add_tickets(balance):
     """Update players ticket balance"""
 
@@ -49,7 +49,7 @@ def add_tickets(balance):
 # Redeem prize
 def redeem_prize(prizes_list, balance):
     """Allow player to redeem a prize if stock is available and they have enough tickets"""
-    
+   
     prize_name = input("Enter the prize you want to redeem: ").title()
 
     # Search for the prize in the list
@@ -62,7 +62,7 @@ def redeem_prize(prizes_list, balance):
 
                 # Stays the same
                 return balance
-            
+           
 
             # Check ticket balance
             elif balance < prize["ticket cost"]:
@@ -72,12 +72,12 @@ def redeem_prize(prizes_list, balance):
                 return balance
 
             actual_cost = prize['ticket cost']
-            
+           
             if balance >= 2000:
                 actual_cost = int(prize["ticket cost"] * 0.9)
-                print("\nVIP discount applied! This prize only costs {} tickets instead of {}".format(vip_discount, prize['ticket cost']))
-        
-                
+                print("\nVIP discount applied! This prize only costs {} tickets instead of {}".format(actual_cost, prize['ticket cost']))
+       
+               
             # If enough tickets + stock
             balance -= actual_cost
             prize["current stock"] -= 1
@@ -93,13 +93,47 @@ def redeem_prize(prizes_list, balance):
     return balance
 
 
+def find_affordable_prizes(prizes_list, balance):
+    """Shows player all prizes with less or equal value to the tickets they want to spend"""
+
+    # Ask player how many tickets they would like to spend
+    budget = int(input("How many tickets do you want to spend?"))
+
+    # Create a list of prizes the player can afford
+    affordable_prizes = []
+
+    # Loop through list of prizes
+    for prize in prizes_list:
            
+        # Check the price is either over or equal to players budget ans check balance is over 0
+        if prize["ticket cost"] <= budget and prize["current stock"] > 0:
+
+            # If meets requirments, add to affordable_prizes list
+            affordable_prizes.append(prize)
+
+        # Check the number of items in list is over 0:
+        if len(affordable_prizes) > 0:
+
+            # Print neatly
+            print("\n--- Affordable Prizes ---")
+            for prize in affordable_prizes:
+                print("Name: {} | Ticket Cost: {} | Current Stock: {} ".format(prize["name"],
+                prize["ticket cost"], prize["current stock"]))
+
+                return balance
+
+        # If no prizes that match requirments
+        else:
+            print("Keep playing! No prizes are available for hthat amount yet.")
+            return balance
+
+
 def main():
     """
     Main routine
     contains  dictionary and menu
     """
-    
+   
     # Create list of dictionary
     # Store 5 different prizes
     prizes_list = [{"name": "Bouncy Ball", "ticket cost": 10, "current stock": 60},
@@ -107,13 +141,13 @@ def main():
                     {"name": "Bop It", "ticket cost": 100, "current stock": 24},
                     {"name": "Action Figure", "ticket cost": 500, "current stock": 12},
                     {"name": "Nerf Gun", "ticket cost": 1000, "current stock": 5}]
-                
+               
     # Greet user
     print("Welcome to WGC's Mega-Byte Arcade!")
 
     # Give user a starting balance
     balance = 0
-    
+   
     print("You have {} tickets.".format(balance))
 
     # Create loop that stays open until user exits
@@ -122,9 +156,10 @@ def main():
         print("\n-- User Menu ---")
         print("1.) Display Inventory")
         print("2.) Add Tickets")
-        print("3.) Redeem prize") 
+        print("3.) Redeem Prize")
+        print("4.) Find Affordable Prizes")
         print("0.) Exit")
-    
+   
         choice = input("Please select an option. (e.g '1'): ")
 
         # If user selects option 1: Display inventory
@@ -138,16 +173,21 @@ def main():
         # Redeem prize
         elif choice == "3":
             balance = redeem_prize(prizes_list, balance)
-            
+
+        # Find affordable prizes
+        elif choice == "4":
+            balance = find_affordable_prizes(prizes_list, balance)
+           
         # End program
         elif choice == "0":
             print("Program shutting down...")
+            print("Program terminated.")
             break
 
         # Invalid code entered
         else:
             print("Please enter a valid number")
-    
+   
 
 # Run main program
 if __name__ == "__main__":
