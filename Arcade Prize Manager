@@ -103,11 +103,6 @@ def find_affordable_prizes(prizes_list, balance):
     # Create a list of prizes the player can afford
     affordable_prizes = []
 
-    # Check player has the budget for the tickets they want to spend
-    if budget > balance:
-        print("Sorry you do not have enough tickets. Your balance is {} tickets. You need {} more tickets.".format(balance, budget - balance))
-        return
-
     # Loop through list of prizes
     for prize in prizes_list:
            
