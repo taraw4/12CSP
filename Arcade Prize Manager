@@ -73,6 +73,7 @@ def redeem_prize(prizes_list, balance):
 
             actual_cost = prize['ticket cost']
            
+            # If VIP get 10% discount
             if balance >= 2000:
                 actual_cost = int(prize["ticket cost"] * 0.9)
                 print("\nVIP discount applied! This prize only costs {} tickets instead of {}".format(actual_cost, prize['ticket cost']))
@@ -102,6 +103,11 @@ def find_affordable_prizes(prizes_list, balance):
     # Create a list of prizes the player can afford
     affordable_prizes = []
 
+    # Check player has the budget for the tickets they want to spend
+    if budget > balance:
+        print("Sorry you do not have enough tickets. Your balance is {} tickets. You need {} more tickets.".format(balance, budget - balance))
+        return
+
     # Loop through list of prizes
     for prize in prizes_list:
            
@@ -112,7 +118,7 @@ def find_affordable_prizes(prizes_list, balance):
             affordable_prizes.append(prize)
 
         # Check the number of items in list is over 0:
-        if len(affordable_prizes) > 0:
+        elif len(affordable_prizes) > 0:
 
             # Print neatly
             print("\n--- Affordable Prizes ---")
@@ -120,13 +126,12 @@ def find_affordable_prizes(prizes_list, balance):
                 print("Name: {} | Ticket Cost: {} | Current Stock: {} ".format(prize["name"],
                 prize["ticket cost"], prize["current stock"]))
 
-                return balance
+            return balance
 
         # If no prizes that match requirments
         else:
-            print("Keep playing! No prizes are available for hthat amount yet.")
+            print("Keep playing! No prizes are available for that amount yet.")
             return balance
-
 
 def main():
     """
@@ -192,5 +197,3 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
-
-
