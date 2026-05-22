@@ -31,7 +31,7 @@ def add_tickets(balance):
 
             # If negative number
             else:
-                print("Error: You cannot add a negative amount of tickets. Please try again.")
+                print("\nError: You cannot add a negative amount of tickets. Please try again.")
 
         # If user types text or symbolss
         except ValueError:
@@ -49,50 +49,59 @@ def add_tickets(balance):
 # Redeem prize
 def redeem_prize(prizes_list, balance):
     """Allow player to redeem a prize if stock is available and they have enough tickets"""
-   
-    prize_name = input("Enter the prize you want to redeem: ").title()
 
-    # Search for the prize in the list
-    for prize in prizes_list:
-        if prize["name"] == prize_name:
+   # Loop to ask until prize is found
+    while True:
+        prize_name = input("Enter the prize you want to redeem: ").title()
 
-            # Check stock
-            if prize["current stock"] <= 0:
-                print("Sorry, {} is out of stock".format(prize_name))
+        # Track if match found
+        prize_match = False
 
-                # Stays the same
-                return balance
+        # Search for the prize in the list
+        for prize in prizes_list:
+            if prize["name"] == prize_name:
+
+                # Match to end loop
+                prize_match = True
+
+                # Check stock
+                if prize["current stock"] <= 0:
+                    print("\nSorry, {} is out of stock".format(prize_name))
+
+                    # Stays the same
+                    return balance
            
 
-            # Check ticket balance
-            elif balance < prize["ticket cost"]:
-                print("Not enough tickets. {} costs {} tickets".format(prize_name, prize['ticket cost']))
+                # Check ticket balance
+                elif balance < prize["ticket cost"]:
+                    print("\nNot enough tickets. {} costs {} tickets".format(prize_name, prize['ticket cost']))
 
-                # Stays the same
-                return balance
+                    # Stays the same
+                    return balance
 
-            else:
-                actual_cost = prize['ticket cost']
+                else:
+                    actual_cost = prize['ticket cost']
            
-                # If VIP get 10% discount
-                if balance >= 2000:
-                    actual_cost = int(prize["ticket cost"] * 0.9)
-                    print("\nVIP discount applied! This prize only costs {} tickets instead of {}".format(actual_cost, prize['ticket cost']))
+                    # If VIP get 10% discount
+                    if balance >= 2000:
+                        actual_cost = int(prize["ticket cost"] * 0.9)
+                        print("\nVIP discount applied! This prize only costs {} tickets instead of {}".format(actual_cost, prize['ticket cost']))
        
                
-                # If enough tickets + stock
-                balance -= actual_cost
-                prize["current stock"] -= 1
+                    # If enough tickets + stock
+                    balance -= actual_cost
+                    prize["current stock"] -= 1
 
-                # Give update message
-                print("\nYou redeemed 1 {} for {} tickets!".format(prize_name, actual_cost))
-                print("Remaining balance: {} tickets".format(balance))
-                print("Current stock for {}: {}".format(prize_name, prize['current stock']))
-                return balance
+                    # Give update message
+                    print("\nYou redeemed 1 {} for {} tickets!".format(prize_name, actual_cost))
+                    print("Remaining balance: {} tickets".format(balance))
+                    print("Current stock for {}: {}".format(prize_name, prize['current stock']))
+                    return balance
 
-    # If prize not found
-    print("Prize not found. Please check spelling and try again.")
-    return balance
+        # If prize not found
+        if prize_match == False:    
+            print("\nPrize not found. Please check spelling and try again.")
+                
 
 
 def find_affordable_prizes(prizes_list, balance):
@@ -103,8 +112,16 @@ def find_affordable_prizes(prizes_list, balance):
 
         try:
             budget = int(input("How many tickets do you want to spend?"))
-            break
-            
+
+            # Check number isn't negative
+            if budget >= 0:
+                break
+
+            # If negative number
+            else:
+                print("\nError: You cannot add a negative amount of tickets. Please try again.")
+
+        # If user types text or symbols     
         except ValueError:
             print("\nInvalid input! Please enter a number(e.g, 50 or 200.)")
 
@@ -131,7 +148,7 @@ def find_affordable_prizes(prizes_list, balance):
 
     # If no prizes that match requirments
     else:
-        print("Keep playing! No prizes are available for that amount yet.")
+        print("\nKeep playing! No prizes are available for that amount yet.")
 
     return balance
 
@@ -187,7 +204,7 @@ def main():
            
         # End program
         elif choice == "0":
-            print("Program shutting down...")
+            print("\nProgram shutting down...")
             print("Program terminated.")
             break
 
@@ -199,3 +216,5 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
+
+
