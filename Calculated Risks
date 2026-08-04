@@ -1,6 +1,43 @@
-"""Calculated Risks - Maths Game"""
-
-# Advanced processes
+##
+# Calculated Risks
 # Tara W
-# 3/08/26
+# 5/08/26
 
+# Functions
+
+
+
+
+def main():
+    """
+    Main routine
+    contains menu
+    """
+
+    # Greet user
+    print("Welcome to Calculated Risks!")
+
+    # Give user starting points
+    points = 0
+
+    # Create loop to display points + menu
+    while True:
+        # Print points
+        print("\nPOINTS: {}".format(points))
+        print("\n -- OPTION SELECT --")
+        print("\n1.) EASY")
+        print("2.) MEDIUM")
+        print("3.) HARD")
+        print("4.) END GAME")
+
+        choice = input("\nPlease select an option. (e.g '1'): ")
+
+        
+        
+        
+
+
+
+# Run main program
+if __name__ == "__main__":
+    main()
