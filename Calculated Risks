@@ -3,9 +3,19 @@
 # Tara W
 # 5/08/26
 
+# Import random
+import random
+
 # Functions
+def easy():
+    return random.randint(1, 500)
+
+def medium():
+    return random.randint(1, 5000)
 
 
+def hard():
+    return random.randint(1,10000)
 
 
 def main():
@@ -32,10 +42,23 @@ def main():
 
         choice = input("\nPlease select an option. (e.g '1'): ")
 
-        
-        
-        
+        if choice == "1":
+            number = easy()
+            print("\nGenerated Easy Number: {}".format(number))
 
+        elif choice == "2":
+            number = medium()
+            print("\nGenerated Medium Number: {}".format(number))
+
+        elif choice == "3":
+            number = hard()
+            print("\nGenerated Hard Number: {}".format(number))
+
+        elif choice == "4":
+            break
+
+        else:
+            ("Please enter a valid number (e.g '1')")
 
 
 # Run main program
