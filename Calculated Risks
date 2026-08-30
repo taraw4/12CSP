@@ -7,15 +7,8 @@
 import random
 
 # Functions
-def easy():
-    return random.randint(1, 500)
-
-def medium():
-    return random.randint(1, 5000)
-
-
-def hard():
-    return random.randint(1,10000)
+def generate_number(max_value):
+    return random.randint(1, max_value)
 
 
 def main():
@@ -43,15 +36,15 @@ def main():
         choice = input("\nPlease select an option. (e.g '1'): ")
 
         if choice == "1":
-            number = easy()
+            number = generate_number(100)
             print("\nGenerated Easy Number: {}".format(number))
 
         elif choice == "2":
-            number = medium()
+            number = generate_number(1000)
             print("\nGenerated Medium Number: {}".format(number))
 
         elif choice == "3":
-            number = hard()
+            number = generate_number(10000)
             print("\nGenerated Hard Number: {}".format(number))
 
         elif choice == "4":
@@ -64,3 +57,4 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
+
