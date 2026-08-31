@@ -8,8 +8,43 @@ import random
 
 # Functions
 def generate_number(max_value):
+    """Generates random number"""
     return random.randint(1, max_value)
 
+def generate_values(symbols, max_value):
+    """Generates two random numbers and a symbol"""
+    num_1 = generate_number(max_value)
+    num_2 = generate_number(max_value)
+    symbol = random.choice(symbols)
+
+    # Return values
+    return num_1, symbol, num_2
+
+def generate_problems(symbols, max_value):
+    """Plays one round, prints line and returns"""
+    #Collect values from generate_values
+    num_1, symbol, num_2 = generate_values(symbols, max_value)
+
+    # Define correct_answer
+    correct_answer = 0
+
+    # Display problem
+    print("\nProblem: {} {} {} = ? ".format(num_1, symbol, num_2))
+
+    # Calculate correct answer
+    if symbol == "+":
+        correct_answer = num_1 + num_2
+
+    elif symbol == "-":
+        correct_answer = num_1 - num_2
+
+    elif symbol == "×":
+        correct_answer = num_1 * num_2
+
+    elif symbol == "÷":
+        correct_answer = num_1 / num_2
+
+    return correct_answer
 
 def main():
     """
@@ -22,6 +57,9 @@ def main():
 
     # Give user starting points
     points = 0
+
+    # Create basic symbols list
+    symbols = ["+", "-", "×", "÷"]
 
     # Create loop to display points + menu
     while True:
@@ -36,22 +74,19 @@ def main():
         choice = input("\nPlease select an option. (e.g '1'): ")
 
         if choice == "1":
-            number = generate_number(100)
-            print("\nGenerated Easy Number: {}".format(number))
+            generate_problems(symbols, 100)
 
         elif choice == "2":
-            number = generate_number(1000)
-            print("\nGenerated Medium Number: {}".format(number))
+            generate_problems(symbols, 1000)
 
         elif choice == "3":
-            number = generate_number(10000)
-            print("\nGenerated Hard Number: {}".format(number))
+            generate_problems(symbols, 10000)
 
         elif choice == "4":
             break
 
         else:
-            ("Please enter a valid number (e.g '1')")
+            print("Please enter a valid number (e.g '1')")
 
 
 # Run main program
