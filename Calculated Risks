@@ -20,7 +20,7 @@ def generate_values(symbols, max_value):
     # Return values
     return num_1, symbol, num_2
 
-def generate_problems(symbols, max_value):
+def generate_problems(symbols, max_value, difficulty):
     """Plays one round, prints line and returns"""
     #Collect values from generate_values
     num_1, symbol, num_2 = generate_values(symbols, max_value)
@@ -29,7 +29,7 @@ def generate_problems(symbols, max_value):
     correct_answer = 0
 
     # Display problem
-    print("\nProblem: {} {} {} = ? ".format(num_1, symbol, num_2))
+    print("\n{} Problem: {} {} {} = ? ".format(difficulty, num_1, symbol, num_2))
 
     # Calculate correct answer
     if symbol == "+":
@@ -44,6 +44,7 @@ def generate_problems(symbols, max_value):
     elif symbol == "÷":
         correct_answer = num_1 / num_2
 
+    # Return answer
     return correct_answer
 
 def main():
@@ -73,18 +74,24 @@ def main():
 
         choice = input("\nPlease select an option. (e.g '1'): ")
 
+        # Allow user to select option
         if choice == "1":
-            generate_problems(symbols, 10)
+            difficulty = "Easy"
+            generate_problems(symbols, 10, difficulty)
 
         elif choice == "2":
-            generate_problems(symbols, 100)
+            difficulty = "Medium"
+            generate_problems(symbols, 100, difficulty)
 
         elif choice == "3":
-            generate_problems(symbols, 1000)
+            difficulty = "Hard"
+            generate_problems(symbols, 1000, difficulty)
 
+        # Allow user to exit program
         elif choice == "4":
             break
 
+        # Make sure user chooses valid number
         else:
             print("Please enter a valid number (e.g '1')")
 
@@ -92,4 +99,6 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
+
+
 
