@@ -74,13 +74,13 @@ def main():
         choice = input("\nPlease select an option. (e.g '1'): ")
 
         if choice == "1":
-            generate_problems(symbols, 100)
+            generate_problems(symbols, 10)
 
         elif choice == "2":
-            generate_problems(symbols, 1000)
+            generate_problems(symbols, 100)
 
         elif choice == "3":
-            generate_problems(symbols, 10000)
+            generate_problems(symbols, 1000)
 
         elif choice == "4":
             break
