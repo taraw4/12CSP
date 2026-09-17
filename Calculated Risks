@@ -17,6 +17,11 @@ def generate_values(symbols, max_value):
     num_2 = generate_number(max_value)
     symbol = random.choice(symbols)
 
+    # Make sure subtraction never ends up with a negative number
+    # AI used here
+    if symbol == "-" and num_1 < num_2:
+        num_1, num_2 = num_2, num_1
+
     # Return values
     return num_1, symbol, num_2
 
@@ -25,13 +30,20 @@ def generate_problems(symbols, max_value, difficulty):
     #Collect values from generate_values
     num_1, symbol, num_2 = generate_values(symbols, max_value)
 
-    # Define correct_answer
-    correct_answer = 0
-
     # Display problem
     print("\n{} Problem: {} {} {} = ? ".format(difficulty, num_1, symbol, num_2))
+    return num_1, symbol, num_2
 
-    # Calculate correct answer
+def valid_answer(answer):
+    """Loops until user enters a valid float number"""
+    while True:
+        try:
+            return int(input(answer))
+        except ValueError:
+            print("Invalid input! Please enter a whole number.")
+
+def check_answer(num_1, symbol, num_2, guess):
+    """Calculates the right answer and checks if guess is correct"""
     if symbol == "+":
         correct_answer = num_1 + num_2
 
@@ -41,11 +53,17 @@ def generate_problems(symbols, max_value, difficulty):
     elif symbol == "×":
         correct_answer = num_1 * num_2
 
+    # AI used here
     elif symbol == "÷":
-        correct_answer = num_1 / num_2
+        correct_answer = num_1 // num_2
 
-    # Return answer
-    return correct_answer
+    if guess == correct_answer:
+        print("Correct!")
+        return True
+
+    else:
+        print("Incorrect! The right answer was {}".format(correct_answer))
+        return False
 
 def main():
     """
@@ -62,7 +80,6 @@ def main():
     # Create basic symbols list
     symbols = ["+", "-", "×", "÷"]
 
-
     # Create loop to display points + menu
     while True:
         # Print points
@@ -75,104 +92,33 @@ def main():
 
         choice = input("\nPlease select an option. (e.g '1'): ")
 
-        # Allow user to select option
         if choice == "1":
             difficulty = "Easy"
-
-            # Store correct answer
-            correct_answer = generate_problems(symbols, 10, difficulty)
-
-            # Loop until user enters valid number
-            while True:
-                try:
-                    # Make sure guess only takes float
-                    guess = float(input("Answer: "))
-
-                    # Exit loop if input is valid number
-                    break
-
-                except ValueError:
-                    print("Invalid input! Please enter a number.")
-
-            # Check if answer is correct
-            if guess == correct_answer:
-                print("Correct!")
-                points += 1
-
-            # If answer is incorrect
-            else:
-                print("Incorrect! The answer was {}".format(correct_answer))
-
-        # If user chooses option 2
+            num_1, symbol, num_2 = generate_problems(["+", "-"], 10, difficulty)
+            guess = valid_answer("Answer: ")
+            check_answer(num_1, symbol, num_2, guess)               
+            
         elif choice == "2":
             difficulty = "Medium"
-
-            # Store correct answer
-            correct_answer = generate_problems(symbols, 100, difficulty)
-
-            # Loop until user enters valid number
-            while True:
-                try:
-
-                    # Make sure guess only takes float
-                    guess = float(input("Answer: "))
-
-                    # Exit loop if input is valid number
-                    break
-
-                except ValueError:
-                    print("Invalid input! Please enter a number.")
-
-            # Check if answer is correct
-            if guess == correct_answer:
-                print("Correct!")
-                points += 1
-
-            # If answer is incorrect
-            else:
-                print("Incorrect! The answer was {}".format(correct_answer))
-
-        # if user chooses option 3
+            num_1, symbol, num_2 = generate_problems(["+", "-",], 100, difficulty)
+            guess = valid_answer("Answer: ")
+            check_answer(num_1, symbol, num_2, guess)     
+      
         elif choice == "3":
             difficulty = "Hard"
-
-            # Store correct answer
-            correct_answer = generate_problems(symbols, 1000, difficulty)
-
-            # Loop until user enters valid number
-            while True:
-                try:
-
-                    # Make sure guess only takes float
-                    guess = float(input("Answer: "))
-
-                    # Exit loop if input is valid number
-                    break
-
-                except ValueError:
-                    print("Invalid input! Please enter a number.")
-
-            # Check if answer is correct
-            if guess == correct_answer:
-                print("Correct!")
-                points += 1
-
-            # If answer is incorrect
-            else:
-                print("Incorrect! The answer was {}".format(correct_answer))
-
-
-        # Allow user to exit program
+            num_1, symbol, num_2 = generate_problems(["×", "÷"], 1000, difficulty)
+            guess = valid_answer("Answer: ")
+            check_answer(num_1, symbol, num_2, guess)     
+    
         elif choice == "0":
+            print("Thank you for playing!")
             break
 
-        # Make sure user chooses valid number
-        else:
-            print("Please enter a valid number (e.g '1')")
-
-
+           
 # Run main program
 if __name__ == "__main__":
     main()
+
+
 
 
