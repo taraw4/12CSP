@@ -65,6 +65,16 @@ def check_answer(num_1, symbol, num_2, guess):
         print("Incorrect! The right answer was {}".format(correct_answer))
         return False
 
+def point_value(difficulty):
+    """Returns the point value based on selected difficulty"""
+    if difficulty == "Easy":
+        return 1
+    elif difficulty == "Medium":
+        return 2
+    elif difficulty == "Hard":
+        return 3
+    return 0
+
 def main():
     """
     Main routine
@@ -96,29 +106,36 @@ def main():
             difficulty = "Easy"
             num_1, symbol, num_2 = generate_problems(["+", "-"], 10, difficulty)
             guess = valid_answer("Answer: ")
-            check_answer(num_1, symbol, num_2, guess)               
-            
+
+            if check_answer(num_1, symbol, num_2, guess):
+                points += point_value(difficulty)
+             
         elif choice == "2":
             difficulty = "Medium"
             num_1, symbol, num_2 = generate_problems(["+", "-",], 100, difficulty)
             guess = valid_answer("Answer: ")
-            check_answer(num_1, symbol, num_2, guess)     
+
+            if check_answer(num_1, symbol, num_2, guess):
+                points += point_value(difficulty)
       
         elif choice == "3":
             difficulty = "Hard"
             num_1, symbol, num_2 = generate_problems(["×", "÷"], 1000, difficulty)
             guess = valid_answer("Answer: ")
-            check_answer(num_1, symbol, num_2, guess)     
+
+            if check_answer(num_1, symbol, num_2, guess):
+                points += point_value(difficulty)
+        
     
         elif choice == "0":
             print("Thank you for playing!")
+            print("You had {} points!".format(points))
             break
 
            
 # Run main program
 if __name__ == "__main__":
     main()
-
 
 
 
