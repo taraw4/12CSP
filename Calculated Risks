@@ -111,7 +111,7 @@ def get_multiplier(streak):
     else:
         return 1
 
-def play_round(difficulty, symbols, max_value, streak, points):
+def play_round(difficulty, symbols, max_value, streak, points, high_score):
     """Loops questions in selected difficulty level until the user gets one wrong"""
     while True:
         # Set multiplier to current streak level
@@ -128,6 +128,13 @@ def play_round(difficulty, symbols, max_value, streak, points):
             # Calculate points won based on difficulty and current multiplier streak
             points += point_value(difficulty) * multiplier
 
+            # Update the high score if current points beat it
+            if points > high_score:
+                high_score = points
+
+            # Display stats after every question
+            print("Current Points: {} | Streak: {} | Multiplier: {}x".format(points, streak, get_multiplier(streak)))
+
         #If user gets question wrong
         else:
                 
@@ -139,7 +146,7 @@ def play_round(difficulty, symbols, max_value, streak, points):
             break
 
     # Return points earned + streak won
-    return points, streak
+    return points, streak, high_score
                                                     
 def main():
     """
@@ -150,9 +157,10 @@ def main():
     # Greet user
     print("Welcome to Calculated Risks!")
 
-    # Give user starting points and streak
+    # Give user starting points, streak, and highscore
     points = 0
     streak = 0
+    high_score = 0
 
     # Create basic symbols list
     symbols = ["+", "-", "×", "÷"]
@@ -165,7 +173,7 @@ def main():
 
         # Print current stats
         print("\n-------------------------------------")
-        print("POINTS: {} | STREAK: {} ({}x Multiplier)".format(points, streak, multiplier))
+        print("POINTS: {} | HIGH SCORE: {} | STREAK: {} ({}x Multiplier)".format(points, high_score, streak, multiplier))
         print("-------------------------------------")
         print("\n -- OPTION SELECT --")
         print("\n1.) EASY")
@@ -180,29 +188,35 @@ def main():
         if choice == "1":
 
             # Set difficuly level based on level chosen
-            points, streak = play_round("Easy", ["+", "-"], 10, streak, points)
+            points, streak, high_score = play_round("Easy", ["+", "-"], 10, streak, points, high_score)
 
                  
         # If user selects option 2
         elif choice == "2":
 
             # Set difficuly level based on level chosen
-            points, streak = play_round("Medium", ["+", "-"], 100, streak, points)
+            points, streak, high_score = play_round("Medium", ["+", "-"], 100, streak, points, high_score)
       
 
         # If user selects option 3
         elif choice == "3":
 
             # Set difficuly level based on level chosen
-            points, streak = play_round("Hard", ["×", "÷"], 1000, streak, points)
+            points, streak, high_score = play_round("Hard", ["×", "÷"], 1000, streak, points, high_score)
             
         
         # If user selects option 0    
         elif choice == "0":
 
             # Print goodbye message + final stats
-            print("Thank you for playing!")
-            print("Final Score: Points: {} | Streak: {}".format(points, streak))
+            print("\n------------------------------------")
+            print(" THANK YOU FOR PLAYING!")
+            print("--------------------------------------")
+            print("Final Score:  {} Points".format(points))
+            print("High Score: {} Points".format(high_score))
+            print("Final Streak: {}".format(streak))
+            print(" Max Multiplier")
+            
 
             # End program
             break
@@ -211,6 +225,3 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
-
-
-
