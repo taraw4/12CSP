@@ -128,10 +128,11 @@ def play_round(difficulty, symbols, max_value, streak, points, high_score):
             # Calculate points won based on difficulty and current multiplier streak
             points += point_value(difficulty) * multiplier
 
-            # Update the high score if current points beat it
+
+            # If current points beat high score, update high score
             if points > high_score:
                 high_score = points
-
+                
             # Display stats after every question
             print("\n------------------------------------------")
             print("POINTS: {} | STREAK: {} | {}X MULTIPLIER ".format(points, streak, get_multiplier(streak)))
@@ -149,7 +150,7 @@ def play_round(difficulty, symbols, max_value, streak, points, high_score):
 
     # Return points earned + streak won
     return points, streak, high_score
-                                                    
+
 def main():
     """
     Main routine
