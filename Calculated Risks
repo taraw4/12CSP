@@ -96,7 +96,13 @@ def point_value(difficulty):
 def get_multiplier(streak):
     """Calculates point multiplier based on users current correct answer streak"""
     # Awards point multiplier based on users current correct answer streak
-    if streak >= 5:
+    if streak >= 10:
+        return 5
+
+    elif streak >= 7:
+        return 4
+    
+    elif streak >= 5:
         return 3
 
     elif streak >=3:
@@ -105,6 +111,36 @@ def get_multiplier(streak):
     else:
         return 1
 
+def play_round(difficulty, symbols, max_value, streak, points):
+    """Loops questions in selected difficulty level until the user gets one wrong"""
+    while True:
+        # Set multiplier to current streak level
+        multiplier = get_multiplier(streak)
+
+        # Generate problems based on selected difficulty
+        num_1, symbol, num_2 = generate_problems(symbols, max_value, difficulty)
+        guess = valid_answer("Answer: ")
+
+        # If user gets question right +1 to streak
+        if check_answer(num_1, symbol, num_2, guess):
+            streak += 1
+
+            # Calculate points won based on difficulty and current multiplier streak
+            points += point_value(difficulty) * multiplier
+
+        #If user gets question wrong
+        else:
+                
+            #Reset streak
+            streak = 0
+            print("Game Over! Returning to menu.")
+
+            # Exit loop
+            break
+
+    # Return points earned + streak won
+    return points, streak
+                                                    
 def main():
     """
     Main routine
@@ -143,60 +179,23 @@ def main():
         # If user selects option 1
         if choice == "1":
 
-            # Set difficulty level
-            difficulty = "Easy"
+            # Set difficuly level based on level chosen
+            points, streak = play_round("Easy", ["+", "-"], 10, streak, points)
 
-            # Generate problem based on difficulty level
-            num_1, symbol, num_2 = generate_problems(["+", "-"], 10, difficulty)
-            guess = valid_answer("Answer: ")
-
-            # If user enters correct answer
-            if check_answer(num_1, symbol, num_2, guess):
-                streak += 1
-
-                # Calculate points based on difficulty level and streak multiplier
-                points += point_value(difficulty) * multiplier
-
-            else:
-                streak = 0
                  
         # If user selects option 2
         elif choice == "2":
 
-            # Set difficulty level
-            difficulty = "Medium"
-
-            # Generate problem based on difficulty level
-            num_1, symbol, num_2 = generate_problems(["+", "-",], 100, difficulty)
-            guess = valid_answer("Answer: ")
-
-            # If user enters correct answer
-            if check_answer(num_1, symbol, num_2, guess):
-                streak += 1
-
-                # Calculate points based on difficulty level and streak multiplier
-                points += point_value(difficulty) * multiplier
-
-            else:
-                streak = 0
+            # Set difficuly level based on level chosen
+            points, streak = play_round("Medium", ["+", "-"], 100, streak, points)
       
 
         # If user selects option 3
         elif choice == "3":
-            # Set difficulty level
-            difficulty = "Hard"
-            num_1, symbol, num_2 = generate_problems(["×", "÷"], 1000, difficulty)
-            guess = valid_answer("Answer: ")
 
-            # If user enters correct answer
-            if check_answer(num_1, symbol, num_2, guess):
-                streak += 1
-
-                # Calculate points based on difficulty level and streak multiplier
-                points += point_value(difficulty) * multiplier
-
-            else:
-                streak = 0
+            # Set difficuly level based on level chosen
+            points, streak = play_round("Hard", ["×", "÷"], 1000, streak, points)
+            
         
         # If user selects option 0    
         elif choice == "0":
@@ -212,5 +211,6 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
+
 
 
