@@ -30,50 +30,80 @@ def generate_problems(symbols, max_value, difficulty):
     #Collect values from generate_values
     num_1, symbol, num_2 = generate_values(symbols, max_value)
 
-    # Display problem
+    # Display problem to user
     print("\n{} Problem: {} {} {} = ? ".format(difficulty, num_1, symbol, num_2))
     return num_1, symbol, num_2
 
 def valid_answer(answer):
     """Loops until user enters a valid float number"""
+    # Loop until valid number entered
     while True:
         try:
             return int(input(answer))
+
+        # Give user error message until correct number entered 
         except ValueError:
             print("Invalid input! Please enter a whole number.")
 
 def check_answer(num_1, symbol, num_2, guess):
     """Calculates the right answer and checks if guess is correct"""
+
+    # Calculates addition equation
     if symbol == "+":
         correct_answer = num_1 + num_2
 
+    # Calculates subtraction equation
     elif symbol == "-":
         correct_answer = num_1 - num_2
-
+        
+    # Calculates multiplication equation
     elif symbol == "×":
         correct_answer = num_1 * num_2
 
+    # Calculates division equation to 1 decimal point
     # AI used here
     elif symbol == "÷":
         correct_answer = num_1 // num_2
 
+    # If user enters correct answer
     if guess == correct_answer:
         print("Correct!")
         return True
 
+    # If user enters incorrect answer
     else:
         print("Incorrect! The right answer was {}".format(correct_answer))
         return False
 
 def point_value(difficulty):
     """Returns the point value based on selected difficulty"""
+
+    # Assign Easy point value
     if difficulty == "Easy":
         return 1
+
+    # Assign Medium point value
     elif difficulty == "Medium":
         return 2
+
+    # Assign Hard point value
     elif difficulty == "Hard":
         return 3
+
+    # If none selected
     return 0
+
+def get_multiplier(streak):
+    """Calculates point multiplier based on users current correct answer streak"""
+    # Awards point multiplier based on users current correct answer streak
+    if streak >= 5:
+        return 3
+
+    elif streak >=3:
+        return 2
+
+    else:
+        return 1
 
 def main():
     """
@@ -84,58 +114,103 @@ def main():
     # Greet user
     print("Welcome to Calculated Risks!")
 
-    # Give user starting points
+    # Give user starting points and streak
     points = 0
+    streak = 0
 
     # Create basic symbols list
     symbols = ["+", "-", "×", "÷"]
 
     # Create loop to display points + menu
     while True:
-        # Print points
-        print("\nPOINTS: {}".format(points))
+
+        # Call multiplier function
+        multiplier = get_multiplier(streak)
+
+        # Print current stats
+        print("\n-------------------------------------")
+        print("POINTS: {} | STREAK: {} ({}x Multiplier)".format(points, streak, multiplier))
+        print("-------------------------------------")
         print("\n -- OPTION SELECT --")
         print("\n1.) EASY")
         print("2.) MEDIUM")
         print("3.) HARD")
         print("0.) END GAME")
 
+        # Prompt user to select an option
         choice = input("\nPlease select an option. (e.g '1'): ")
 
+        # If user selects option 1
         if choice == "1":
+
+            # Set difficulty level
             difficulty = "Easy"
+
+            # Generate problem based on difficulty level
             num_1, symbol, num_2 = generate_problems(["+", "-"], 10, difficulty)
             guess = valid_answer("Answer: ")
 
+            # If user enters correct answer
             if check_answer(num_1, symbol, num_2, guess):
-                points += point_value(difficulty)
-             
+                streak += 1
+
+                # Calculate points based on difficulty level and streak multiplier
+                points += point_value(difficulty) * multiplier
+
+            else:
+                streak = 0
+                 
+        # If user selects option 2
         elif choice == "2":
+
+            # Set difficulty level
             difficulty = "Medium"
+
+            # Generate problem based on difficulty level
             num_1, symbol, num_2 = generate_problems(["+", "-",], 100, difficulty)
             guess = valid_answer("Answer: ")
 
+            # If user enters correct answer
             if check_answer(num_1, symbol, num_2, guess):
-                points += point_value(difficulty)
+                streak += 1
+
+                # Calculate points based on difficulty level and streak multiplier
+                points += point_value(difficulty) * multiplier
+
+            else:
+                streak = 0
       
+
+        # If user selects option 3
         elif choice == "3":
+            # Set difficulty level
             difficulty = "Hard"
             num_1, symbol, num_2 = generate_problems(["×", "÷"], 1000, difficulty)
             guess = valid_answer("Answer: ")
 
+            # If user enters correct answer
             if check_answer(num_1, symbol, num_2, guess):
-                points += point_value(difficulty)
+                streak += 1
+
+                # Calculate points based on difficulty level and streak multiplier
+                points += point_value(difficulty) * multiplier
+
+            else:
+                streak = 0
         
-    
+        # If user selects option 0    
         elif choice == "0":
+
+            # Print goodbye message + final stats
             print("Thank you for playing!")
-            print("You had {} points!".format(points))
+            print("Final Score: Points: {} | Streak: {}".format(points, streak))
+
+            # End program
             break
 
            
 # Run main program
 if __name__ == "__main__":
     main()
-
 
 
