@@ -134,7 +134,7 @@ def play_round(difficulty, symbols, max_value, streak, points, high_score):
 
             # Display stats after every question
             print("\n------------------------------------------")
-            print("POINTS: {} | STREAK: {} | {}X MULTIPLIER: ".format(points, streak, get_multiplier(streak)))
+            print("POINTS: {} | STREAK: {} | {}X MULTIPLIER ".format(points, streak, get_multiplier(streak)))
             print("------------------------------------------")
 
         #If user gets question wrong
@@ -175,7 +175,7 @@ def main():
 
         # Print current stats
         print("\n--------------------------------------------------------")
-        print("HIGH SCORE: {} | POINTS: {} | STREAK: {} ({}x Multiplier)".format(high_score, points, streak, multiplier))
+        print("HIGH SCORE: {} | POINTS: {} | STREAK: {} | {}X MULTIPLIER".format(high_score, points, streak, multiplier))
         print("--------------------------------------------------------")
         print("\n -- OPTION SELECT --")
         print("\n1.) EASY")
@@ -228,4 +228,3 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
-
