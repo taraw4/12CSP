@@ -67,12 +67,12 @@ def check_answer(num_1, symbol, num_2, guess):
 
     # If user enters correct answer
     if guess == correct_answer:
-        print("Correct!")
+        print("\nCorrect!")
         return True
 
     # If user enters incorrect answer
     else:
-        print("Incorrect! The right answer was {}".format(correct_answer))
+        print("\nIncorrect! The right answer was {}".format(correct_answer))
         return False
 
 def point_value(difficulty):
@@ -133,7 +133,9 @@ def play_round(difficulty, symbols, max_value, streak, points, high_score):
                 high_score = points
 
             # Display stats after every question
-            print("Current Points: {} | Streak: {} | Multiplier: {}x".format(points, streak, get_multiplier(streak)))
+            print("\n------------------------------------------")
+            print("POINTS: {} | STREAK: {} | {}X MULTIPLIER: ".format(points, streak, get_multiplier(streak)))
+            print("------------------------------------------")
 
         #If user gets question wrong
         else:
@@ -172,9 +174,9 @@ def main():
         multiplier = get_multiplier(streak)
 
         # Print current stats
-        print("\n-------------------------------------")
-        print("POINTS: {} | HIGH SCORE: {} | STREAK: {} ({}x Multiplier)".format(points, high_score, streak, multiplier))
-        print("-------------------------------------")
+        print("\n--------------------------------------------------------")
+        print("HIGH SCORE: {} | POINTS: {} | STREAK: {} ({}x Multiplier)".format(high_score, points, streak, multiplier))
+        print("--------------------------------------------------------")
         print("\n -- OPTION SELECT --")
         print("\n1.) EASY")
         print("2.) MEDIUM")
@@ -210,12 +212,13 @@ def main():
 
             # Print goodbye message + final stats
             print("\n------------------------------------")
-            print(" THANK YOU FOR PLAYING!")
+            print("         THANK YOU FOR PLAYING!       ")
             print("--------------------------------------")
             print("Final Score:  {} Points".format(points))
             print("High Score: {} Points".format(high_score))
             print("Final Streak: {}".format(streak))
-            print(" Max Multiplier")
+            print(" Max Multiplier: {}x".format(get_multiplier(streak)))
+            print("--------------------------------------")
             
 
             # End program
@@ -225,3 +228,4 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
+
