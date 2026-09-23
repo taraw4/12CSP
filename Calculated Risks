@@ -165,6 +165,18 @@ def play_round(difficulty, symbols, max_value, streak, points, high_score, max_m
     # Return points earned + streak won
     return points, streak, high_score, max_multiplier, max_streak
 
+def display_end_game(points, high_score, max_streak, max_multiplier):
+    """Displays game over message and stats summary"""
+    print("\n------------------------------------")
+    print("         THANK YOU FOR PLAYING!       ")
+    print("--------------------------------------")
+    print("Score:          {} Points".format(points))
+    print("High Score:     {} Points".format(high_score))
+    print("Longest Streak: {}".format(max_streak))
+    print("Max Multiplier: {}x".format(max_multiplier))
+    print("--------------------------------------")
+    
+
 def main():
     """
     Main routine
@@ -237,15 +249,7 @@ def main():
         elif choice == "0":
 
             # Print goodbye message + final stats
-            print("\n------------------------------------")
-            print("         THANK YOU FOR PLAYING!       ")
-            print("--------------------------------------")
-            print("Last Score:  {} Points".format(points))
-            print("High Score: {} Points".format(high_score))
-            print("Longest Streak: {}".format(max_streak))
-            print("Max Multiplier: {}x".format(max_multiplier))
-            print("--------------------------------------")
-            
+            display_end_game(points, high_score, max_streak, max_multiplier)
 
             # End program
             break
