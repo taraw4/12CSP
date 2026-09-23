@@ -139,16 +139,16 @@ def prompt_cash_out(points, next_multiplier):
     Returns True if user chooses to cash out, False if they want to keep playing."""
 
     print("\n------------------------------------------")
-    print(" MULTIPLIER THRESHOLD REACHED! ")
+    print("      MULTIPLIER THRESHOLD REACHED!         ")
     print(" \nCurrent Points Earned: {}".format(points))
-    print(" Next Tier Multiplier: {}X".format(next_multiplier))
+    print("Next Tier Multiplier: {}X".format(next_multiplier))
     print("------------------------------------------")
     print("\n            AVAILABLE OPTIONS:             ")
     print("                                             ")
     print("------------------------------------------")
     print("\n1.) CASH OUT: Lock in {} points and set as High Score".format(points))
     print("2.) RISK IT: Continue playing for {}X multiplier".format(next_multiplier))
-    print("    WARNING: Entering the wrong answer will lose ALL points this round!)".format(next_multiplier))
+    print("\nWARNING: Entering the wrong answer will lose ALL points this round!)".format(next_multiplier))
 
     while True:
         choice = input("\nWould you like to cash out or risk it all? (1 or 2): ").strip()
@@ -183,15 +183,13 @@ def play_round(difficulty, symbols, max_value, streak, points, high_scores, max_
             # Calculate points won based on difficulty and current multiplier streak
             points += point_value(difficulty) * multiplier
 
-            # Calculates multiplier + update scores
+              # Calculates current multiplier
             current_multiplier = get_multiplier(streak)
 
-            if current_multiplier > max_multiplier:
-                max_multiplier = current_multiplier
-
+            # Update maximum streak
             if streak > max_streak:
                 max_streak = streak
-                
+
             # Display stats after every question
             print("\n------------------------------------------")
             print("POINTS: {} | STREAK: {} | {}X MULTIPLIER ".format(points, streak, current_multiplier))
@@ -200,18 +198,35 @@ def play_round(difficulty, symbols, max_value, streak, points, high_scores, max_
             # Check if user hit a multiplier threshold + offer cash out option
             if streak in multiplier_thresholds:
                 next_multiplier = get_multiplier(streak + 1)
+
                 if prompt_cash_out(points, next_multiplier):
 
-                    # Cash out, save high scores and return points
-                    high_scores, max_multiplier, max_streak = update_scores(difficulty, points, high_scores, current_multiplier, max_multiplier, streak, max_streak)
+                    # Cash out,  update high score and streak
+                    if points > high_scores[difficulty]:
+                        high_scores[difficulty] = points
+
+                    # Don't update max_multiplier because the player cashed out before reaching the next tier
                     break
 
-        #If user gets question wrong
+                else:
+
+                    # User chose to risk it, so they have now reachedthe next multiplier tier
+                    if next_multiplier > max_multiplier:
+                        max_multiplier = next_multiplier
+
+            else:
+
+                # No cash-out option, so update multiplier normally
+                if current_multiplier > max_multiplier:
+                    max_multiplier = current_multiplier
+
+
+        # If user gets question wrong
         else:
 
-            print("\nIncorrect answer! You lost all points earned this round.")
+            print("\nYou lost all points earned this round.")
                 
-            #Reset streak, high score is not updated
+            # Reset streak, high score is not updated
             points = 0
             streak = 0
 
@@ -370,4 +385,3 @@ def main():
 # Run main program
 if __name__ == "__main__":
     main()
-
