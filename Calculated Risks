@@ -282,6 +282,7 @@ def main():
             # If user selects option 4
             elif choice == 4:
                 display_high_scores(high_scores)
+                # Had AI help here
                 input("\nPress Enter to return to the main menu.")
 
             # If user selects option 0    
