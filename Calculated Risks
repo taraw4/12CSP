@@ -41,7 +41,7 @@ def valid_answer(answer):
         try:
             return int(input(answer))
 
-        # Give user error message until correct number entered 
+        # Give user error message until valid whole number entered 
         except ValueError:
             print("Invalid input! Please enter a whole number.")
 
@@ -65,12 +65,12 @@ def check_answer(num_1, symbol, num_2, guess):
     elif symbol == "÷":
         correct_answer = num_1 // num_2
 
-    # If user enters correct answer
+    # If user enters correct answer display "Correct!" message
     if guess == correct_answer:
         print("\nCorrect!")
         return True
 
-    # If user enters incorrect answer
+    # If user enters incorrect answer display "Incorrect! message and display correct answer
     else:
         print("\nIncorrect! The right answer was {}".format(correct_answer))
         return False
@@ -90,49 +90,58 @@ def point_value(difficulty):
     elif difficulty == "Hard":
         return 3
 
-    # If none selected
+    # Assign base point value of 0
     return 0
 
 def get_multiplier(streak):
     """Calculates point multiplier based on users current correct answer streak"""
     # Awards point multiplier based on users current correct answer streak
+    # If streak is greater than or equal to 10, multiplier is equal to 5
     if streak >= 10:
         return 5
 
+    # If streak is greater than or equal to 7, multiplier is equal to 4
     elif streak >= 7:
         return 4
     
+    # If streak is greater than or equal to 5, multiplier is equal to 3
     elif streak >= 5:
         return 3
 
+    # If streak is greater than or equal to 3, multiplier is equal to 2
     elif streak >=3:
         return 2
 
+    # Sets default multiplier to 1x
     else:
         return 1
 
     
 def update_scores(difficulty, points, high_scores, current_multiplier, max_multiplier, streak, max_streak):
     """Checks and updates high score"""
+    # If current score is greater than overall high score, high score is updated
     if points > high_scores[difficulty]:
         high_scores[difficulty] = points
 
+    # If current multiplier is greater than maximum multiplier, maximum multiplier is updated
     if current_multiplier > max_multiplier:
         max_multiplier = current_multiplier
 
+    # If current streak is greater than maximum streak, maximum streak is updated
     if streak > max_streak:
         max_streak = streak
 
+    # Returns updated scores
     return high_scores, max_multiplier, max_streak
 
 
 def play_round(difficulty, symbols, max_value, streak, points, high_scores, max_multiplier, max_streak):
     """Loops questions in selected difficulty level until the user gets one wrong"""
     while True:
-        # Set multiplier to current streak level
+        # Sets multiplier to current streak level
         multiplier = get_multiplier(streak)
 
-        # Generate problems based on selected difficulty
+        # Generates problems based on selected difficulty
         num_1, symbol, num_2 = generate_problems(symbols, max_value, difficulty)
         guess = valid_answer("Answer: ")
 
@@ -143,7 +152,7 @@ def play_round(difficulty, symbols, max_value, streak, points, high_scores, max_
             # Calculate points won based on difficulty and current multiplier streak
             points += point_value(difficulty) * multiplier
 
-            # Recalculate multiplier + update scores
+            # Calculates multiplier + update scores
             current_multiplier = get_multiplier(streak)
             high_scores, max_multiplier, max_streak = update_scores(difficulty, points, high_scores, current_multiplier, max_multiplier, streak, max_streak)
                 
@@ -157,12 +166,14 @@ def play_round(difficulty, symbols, max_value, streak, points, high_scores, max_
                 
             #Reset streak
             streak = 0
+
+            # Displays game over message
             print("\nGame Over! Returning to menu.")
 
             # Exit loop
             break
 
-    # Return points earned + streak won
+    # Returns values
     return points, streak, high_scores, max_multiplier, max_streak
 
 def display_high_scores(high_scores):
@@ -201,7 +212,7 @@ def main():
     # Greet user
     print("Welcome to Calculated Risks!")
 
-    # Give user starting points, streak, and highscore
+    # Sets users starting points, streak, maximum multiplier, and maximum streak 
     points = 0
     streak = 0
     max_multiplier = 1
@@ -210,20 +221,21 @@ def main():
     # Stores the high scores for each level inside a dictionary
     high_scores = {"Easy": 0, "Medium": 0, "Hard": 0}
 
+    # Gives last_played a base value
     last_played = "None"
 
-    # Create basic symbols list
+    # Creates basic symbols list
     symbols = ["+", "-", "×", "÷"]
 
 
-    # Create loop to display points + menu
+    # Creates loop to display points + menu
     while True:
 
-        # Call multiplier function
+        # Calls multiplier function
         multiplier = get_multiplier(streak)
 
 
-        # Print current stats
+        # Prints users current stats + menu
         print("\n-------------------------")
         print("       USER STATS         ")
         print("-------------------------")
@@ -238,50 +250,58 @@ def main():
         print("4.) VIEW ALL HIGH SCORES")
         print("0.) END GAME")
 
-        # Prompt user to select an option
+        # Prompts user to select an option
         choice_input = input("\nPlease select an option. (e.g '1'): ")
 
+        # Try and except loop until user enters valid number
         try:
             choice = int(choice_input)
 
             # If user selects option 1
             if choice == 1:
 
+                # Assigns last_played correct difficulty level
                 last_played = "Easy"
 
                 # Reset score for new game round
                 round_points = 0
 
-                # Set difficuly level based on level chosen
+                # Sets difficulty level based on level chosen
                 points, streak, high_scores, max_multiplier, max_streak = play_round("Easy", ["+", "-"], 10, 0, round_points, high_scores, max_multiplier, max_streak)
 
                  
             # If user selects option 2
             elif choice == 2:
-
+                
+                # Assigns last_played correct difficulty level
                 last_played = "Medium"
 
                 # Reset score for new game round
                 round_points = 0
 
-                # Set difficuly level based on level chosen
+                # Sets difficulty level based on level chosen
                 points, streak, high_scores, max_multiplier, max_streak = play_round("Medium", ["+", "-"], 100, 0, round_points, high_scores, max_multiplier, max_streak)
 
 
             # If user selects option 3
             elif choice == 3:
-
+                
+                # Assigns last_played correct difficulty level
                 last_played = "Hard"
 
                 # Reset score for new game round
                 round_points = 0
 
-                # Set difficulty level based on level chosen
+                # Sets difficulty level based on level chosen
                 points, streak, high_scores, max_multiplier, max_streak = play_round("Hard", ["×", "÷"], 1000, 0, round_points, high_scores, max_multiplier, max_streak)
 
             # If user selects option 4
             elif choice == 4:
+
+                # Calls function to display all high scores
                 display_high_scores(high_scores)
+
+                # Stops user from immediatly returning to main menu
                 # Had AI help here
                 input("\nPress Enter to return to the main menu.")
 
@@ -299,9 +319,11 @@ def main():
             else:
                 print("Invalid choice! Please select a number from the menu (0-4).")
         
+        # If an invalid symbol or letter is selected
         except ValueError:
             print("Invalid input! Please enter a number")
            
 # Run main program
 if __name__ == "__main__":
     main()
+
